@@ -1,0 +1,64 @@
+﻿
+@model   List<ManuBar.Models.CatagoryView>
+<br/>
+<ul class="nav nav-pills  nav-stacked">
+    <li >  @Html.ActionLink("Home", "index", "Home", null, new { @class = "btn btn-block btn-default, btn-lg" })</li> 
+    @foreach (var link in Model)
+    {
+        <li>
+            @if (link.SubCatagoryList.Count > 0)
+            {
+                var xy = "#" +link.CategoryName;
+                var x = link.CategoryName;
+            <button class="btn btn-block btn-default, btn-lg" type="button" data-toggle="collapse" data-target= @xy aria-expanded="false" aria-controls="collapseExample">
+                @link.CategoryName
+            </button>
+
+            <ul class="collapse " id=@x>
+                @foreach (string item in link.SubCatagoryList)
+                {
+
+
+
+                    <li>
+                        @Html.RouteLink(item, new
+                            {
+
+                                Controller = "Home",
+                                Action = "Index",
+                                category = link.CategoryName,
+                                subcategory = item
+
+                            },
+                                new { @class = "btn btn-block btn-default btn-lg" }
+
+
+
+                                )
+
+                    </li>
+
+
+                }
+            </ul>
+
+
+            }
+
+            else
+            {
+            @Html.RouteLink(link.CategoryName, new
+            {
+                Controller = "Home",
+                Action = "Index",
+                category = link.CategoryName,
+                subcategory = (string)null
+            },
+                new { @class = "btn btn-block btn-default btn-lg" }
+                )
+            }
+        </li>
+
+
+    }
+</ul>
